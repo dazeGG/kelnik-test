@@ -1,0 +1,27 @@
+@use 'reset';
+
+:root {
+	--color-bg: white;
+
+	--color-text: black;
+	--color-text-muted: #00000022;
+
+	--color-accent: #3EB57C;
+	--color-accent-muted: linear-gradient(135deg, rgba(174, 228, 178, 0.3) 0%, rgba(149, 208, 161, 0.3) 100%);
+}
+
+html {
+	font-size: 16px;
+}
+
+body {
+	max-width: 1440px;
+	padding: 96px 80px;
+	margin: 0 auto;
+}
+
+h1 {
+	font-size: 54px;
+	line-height: 1;
+	font-weight: 700;
+}
