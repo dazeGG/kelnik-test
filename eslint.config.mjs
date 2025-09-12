@@ -6,7 +6,8 @@ import nuxtEslintConfig from '@nuxt/eslint-config'
 const customRules = {
 	rules: {
 		curly: ['error', 'all'],
-		'indent': ['error', 'tab'],
+		semi: ["error", "always"],
+		indent: ['error', 'tab'],
 		'comma-dangle': ['error', 'always-multiline'],
 		'vue/multi-word-component-names': 'off',
 	},
