@@ -3,6 +3,7 @@ import type { FlatType } from '../../../types';
 
 const props = defineProps<{
 	flats: FlatType[]
+	loading?: boolean
 }>();
 
 interface Column {
@@ -45,7 +46,7 @@ const columns: Column[] = [
 		<tbody class="flats-table__body">
 			<tr v-for="flatData in props.flats" :key="flatData.id" class="flat">
 				<td>
-					<img :src="flatData.plan" alt="" class="flat__plan" />
+					<img :src="flatData.plan" alt="" class="flat__plan" >
 				</td>
 				<td>
 					<span class="flat__title">
@@ -71,6 +72,7 @@ const columns: Column[] = [
 			</tr>
 		</tbody>
 	</table>
+	<span v-if="props.loading">loading...</span>
 </template>
 
 <style scoped lang="scss">

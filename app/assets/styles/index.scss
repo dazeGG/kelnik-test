@@ -3,13 +3,15 @@
 
 :root {
 	--color-bg: white;
-	--color-border: #00000020;
+	--color-border: #00000010;
 
 	--color-text: rgb(11, 23, 57);
 	--color-text-muted: rgba(11, 23, 57, 0.4);
 
 	--color-accent: #3EB57C;
 	--color-accent-muted: linear-gradient(135deg, rgba(174, 228, 178, 0.3) 0%, rgba(149, 208, 161, 0.3) 100%);
+
+	--color-button-border: #0B173933;
 }
 
 html {
