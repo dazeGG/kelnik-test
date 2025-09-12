@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { onBeforeMount } from "vue";
 import { useFlatsStore } from "../../../stores";
 
 import UIButton from "../../base/ui-button.vue";
@@ -7,7 +6,9 @@ import FlatsTable from './flats-table.vue';
 
 const flatsStore = useFlatsStore();
 
-onBeforeMount(() => flatsStore.loadFlats({}));
+if (import.meta.client) {
+	flatsStore.loadFlats({});
+}
 
 const loadMore = () => {
 	flatsStore.loadFlats({ offset: flatsStore.flats.length });
@@ -16,7 +17,7 @@ const loadMore = () => {
 
 <template>
 	<div class="flats-list">
-		<FlatsTable :flats="flatsStore.flats" />
+		<FlatsTable :flats="flatsStore.flats" :loading="flatsStore.loading" />
 
 		<UIButton :disabled="!flatsStore.hasMore" @click="loadMore">Загрузить еще</UIButton>
 	</div>
