@@ -45,7 +45,7 @@ const columns: Column[] = [
 		<tbody class="flats-table__body">
 			<tr v-for="flatData in props.flats" :key="flatData.id" class="flat">
 				<td>
-					<img :src="flatData.plan" alt="" class="flat__plan" />
+					<img :src="flatData.plan" alt="" class="flat__plan" >
 				</td>
 				<td>
 					<span class="flat__title">
