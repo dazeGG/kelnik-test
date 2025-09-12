@@ -47,13 +47,27 @@ const columns: Column[] = [
 				<td>
 					<img :src="flatData.plan" alt="" class="flat__plan" />
 				</td>
-				<td class="flat__title">{{ flatData.rooms }}-комнатная №{{ flatData.number }}</td>
-				<td class="flat__square">{{ flatData.square.toString().replace('.', ',') }}</td>
-				<td class="flat__floor">
-					{{ flatData.floor }}
-					<span :style="{ color: 'var(--color-text-muted)' }">из {{ flatData.maxFloor }}</span>
+				<td>
+					<span class="flat__title">
+						{{ flatData.rooms }}-комнатная №{{ flatData.number }}
+					</span>
 				</td>
-				<td class="flat__price">{{ flatData.price }}</td>
+				<td>
+					<span class="flat__square">
+						{{ flatData.square.toString().replace('.', ',') }}
+					</span>
+				</td>
+				<td>
+					<span class="flat__floor">
+						{{ flatData.floor }}
+						<span :style="{ color: 'var(--color-text-muted)' }">из {{ flatData.maxFloor }}</span>
+					</span>
+				</td>
+				<td>
+					<span  class="flat__price">
+						{{ flatData.price.toLocaleString('ru-RU') }}
+					</span>
+				</td>
 			</tr>
 		</tbody>
 	</table>

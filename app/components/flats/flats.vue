@@ -1,49 +1,6 @@
 <script setup lang="ts">
+import flats from '../../__mock__/flats.json';
 import FlatsList from './list/flats-list.vue';
-import type { FlatType } from '../../types';
-
-const flats: FlatType[] = [
-	{
-		id: 1,
-		rooms: 3,
-		number: 104,
-		plan: 'plan-default.svg',
-		square: 63.1,
-		floor: 1,
-		maxFloor: 17,
-		price: 6630500,
-	},
-	{
-		id: 1,
-		rooms: 3,
-		number: 104,
-		plan: 'plan-default.svg',
-		square: 63.1,
-		floor: 1,
-		maxFloor: 17,
-		price: 6630500,
-	},
-	{
-		id: 1,
-		rooms: 3,
-		number: 104,
-		plan: 'plan-default.svg',
-		square: 63.1,
-		floor: 1,
-		maxFloor: 17,
-		price: 6630500,
-	},
-	{
-		id: 1,
-		rooms: 3,
-		number: 104,
-		plan: 'plan-default.svg',
-		square: 63.1,
-		floor: 1,
-		maxFloor: 17,
-		price: 6630500,
-	},
-];
 </script>
 
 <template>
