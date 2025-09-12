@@ -43,11 +43,11 @@ export const useFlatsStore = defineStore('flats', () => {
 	const loading = ref(false);
 	const error = ref<string | null>(null);
 
-	const loadFlats = async ({ count = 50, offset = 0 }: Partial<Pagination>): Promise<void> => {
+	const loadFlats = async ({ count = 5, offset = 0 }: Partial<Pagination>): Promise<void> => {
 		loading.value = true;
 		error.value = null;
 
-		await new Promise(resolve => setTimeout(resolve, 200));
+		await new Promise(resolve => setTimeout(resolve, Math.floor(Math.random() * (500 - 250 + 1)) + 250));
 
 		const response = getFlats({ count, offset });
 
