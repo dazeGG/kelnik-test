@@ -1,3 +1,5 @@
 <template>
-  <div>Page</div>
+	<div>
+		<h1>Квартиры</h1>
+	</div>
 </template>

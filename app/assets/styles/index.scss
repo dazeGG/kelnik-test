@@ -1,4 +1,5 @@
 @use 'reset';
+@use '../fonts/index.css';
 
 :root {
 	--color-bg: white;
@@ -12,6 +13,7 @@
 
 html {
 	font-size: 16px;
+	font-family: 'PT Root UI', 'PT Root UI VF', sans-serif;
 }
 
 body {
