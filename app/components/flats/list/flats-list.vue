@@ -1,15 +1,17 @@
 <script setup lang="ts">
-import FlatsTable from './flats-table.vue';
-import type { FlatType } from '../../../types';
+import { onBeforeMount } from "vue";
+import { useFlatsStore } from "../../../stores";
 
-const props = defineProps<{
-	flats: FlatType[]
-}>();
+import FlatsTable from './flats-table.vue';
+
+const flatsStore = useFlatsStore();
+
+onBeforeMount(() => flatsStore.loadFlats({}));
 </script>
 
 <template>
 	<div class="flats-list">
-		<FlatsTable :flats="props.flats" />
+		<FlatsTable :flats="flatsStore.flats" />
 	</div>
 </template>
 
