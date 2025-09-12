@@ -8,7 +8,7 @@ const props = defineProps<{
 
 <template>
 	{{ props.flat }}
-	<img :src="props.flat.plan" alt="" />
+	<img :src="props.flat.plan" alt="" >
 </template>
 
 <style scoped lang="scss">
