@@ -47,7 +47,7 @@ export const useFlatsStore = defineStore('flats', () => {
 		loading.value = true;
 		error.value = null;
 
-		await new Promise(resolve => setTimeout(resolve, Math.floor(Math.random() * (500 - 250 + 1)) + 250));
+		await new Promise(resolve => setTimeout(resolve, Math.floor(Math.random() * (2000 - 500 + 1)) + 500));
 
 		const response = getFlats({ count, offset });
 
