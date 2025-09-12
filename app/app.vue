@@ -1,5 +1,5 @@
 <template>
 	<div>
-		<h1>Квартиры</h1>
+		<Flats />
 	</div>
 </template>
