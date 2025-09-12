@@ -1,7 +1,8 @@
 export interface FlatType {
 	id: number
-	title: string
 	plan: string
+	rooms: number
+	number: number
 	square: number
 	floor: number
 	maxFloor: number

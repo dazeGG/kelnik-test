@@ -5,7 +5,8 @@ import type { FlatType } from '../../types';
 const flats: FlatType[] = [
 	{
 		id: 1,
-		title: '3-комнатная №104',
+		rooms: 3,
+		number: 104,
 		plan: 'plan-default.svg',
 		square: 63.1,
 		floor: 1,
@@ -14,7 +15,8 @@ const flats: FlatType[] = [
 	},
 	{
 		id: 1,
-		title: '3-комнатная №104',
+		rooms: 3,
+		number: 104,
 		plan: 'plan-default.svg',
 		square: 63.1,
 		floor: 1,
@@ -23,7 +25,8 @@ const flats: FlatType[] = [
 	},
 	{
 		id: 1,
-		title: '3-комнатная №104',
+		rooms: 3,
+		number: 104,
 		plan: 'plan-default.svg',
 		square: 63.1,
 		floor: 1,
@@ -32,7 +35,8 @@ const flats: FlatType[] = [
 	},
 	{
 		id: 1,
-		title: '3-комнатная №104',
+		rooms: 3,
+		number: 104,
 		plan: 'plan-default.svg',
 		square: 63.1,
 		floor: 1,

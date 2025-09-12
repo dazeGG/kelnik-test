@@ -47,7 +47,7 @@ const columns: Column[] = [
 				<td>
 					<img :src="flatData.plan" alt="" class="flat__plan" />
 				</td>
-				<td class="flat__title">{{ flatData.title }}</td>
+				<td class="flat__title">{{ flatData.rooms }}-комнатная №{{ flatData.number }}</td>
 				<td class="flat__square">{{ flatData.square.toString().replace('.', ',') }}</td>
 				<td class="flat__floor">
 					{{ flatData.floor }}
