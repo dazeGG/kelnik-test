@@ -1,4 +1,5 @@
 import { ref } from "vue";
+import { cloneDeep } from 'lodash';
 
 import flatsMock from '../__mock__/flats.json';
 import type { FlatType } from "../types";
@@ -19,16 +20,35 @@ interface Pagination {
 	offset: number
 }
 
-const getFlats = ({ count, offset }: Pagination): GetFlatsMethodSuccessResponse | GetFlatsMethodErrorResponse => {
+interface Sort {
+	type: 'square' | 'floor' | 'price'
+	mode: 'asc' | 'desc'
+}
+
+const getFlats = ({ count, offset }: Pagination, sort?: Sort): GetFlatsMethodSuccessResponse | GetFlatsMethodErrorResponse => {
 	try {
-		const totalFlats = flatsMock as FlatType[];
+		const totalFlats = cloneDeep(flatsMock) as FlatType[];
 		const endIndex = Math.min(offset + count, totalFlats.length);
 
-		return {
+		const sharedResponse = {
 			success: true,
-			data: totalFlats.slice(offset, endIndex),
 			more: offset + count < totalFlats.length,
-		};
+		} as const;
+
+		if (sort) {
+			const { type, mode } = sort;
+			const sortedData = totalFlats.sort((a, b) => mode === 'asc' ? a[type] - b[type] : b[type] - a[type]);
+
+			return {
+				...sharedResponse,
+				data: sortedData.slice(offset, endIndex),
+			};
+		} else {
+			return {
+				...sharedResponse,
+				data: totalFlats.slice(offset, endIndex),
+			};
+		}
 	} catch (err) {
 		return {
 			success: false,
@@ -43,13 +63,13 @@ export const useFlatsStore = defineStore('flats', () => {
 	const loading = ref(false);
 	const error = ref<string | null>(null);
 
-	const loadFlats = async ({ count = 5, offset = 0 }: Partial<Pagination>): Promise<void> => {
+	const loadFlats = async ({ count = 5, offset = 0 }: Partial<Pagination>, sort?: Sort): Promise<void> => {
 		loading.value = true;
 		error.value = null;
 
 		await new Promise(resolve => setTimeout(resolve, Math.floor(Math.random() * (2000 - 500 + 1)) + 500));
 
-		const response = getFlats({ count, offset });
+		const response = getFlats({ count, offset }, sort);
 
 		if (response.success) {
 			if (offset === 0) {
