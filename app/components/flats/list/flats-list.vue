@@ -1,9 +1,9 @@
 <script setup lang="ts">
+import { watch } from "vue";
 import { useFlatsStore } from "../../../stores";
 
 import UIButton from "../../base/ui-button.vue";
 import FlatsTable from './table/flats-table.vue';
-import {watch} from "vue";
 
 const route = useRoute();
 const router = useRouter();
@@ -57,8 +57,8 @@ if (import.meta.client) {
 
 watch(
 	() => sort.value,
-	() => {
-		flatsStore.loadFlats({}, sort.value);
+	(newSort) => {
+		flatsStore.loadFlats({ count: flatsStore.flats.length }, newSort);
 	},
 );
 </script>
