@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import UILoader from "../../../base/ui-loader.vue";
+import UILoader from "@/components/base/ui-loader.vue";
+import type { FlatType } from '@/types';
 
-import type { FlatType } from '../../../../types';
 import TableSortableButton from "./table-sortable-button.vue";
 
 const props = defineProps<{

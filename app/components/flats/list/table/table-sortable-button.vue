@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import ArrowDownIcon from '../../../../assets/icons/arrow-down.svg';
+import ArrowDownIcon from '@/assets/icons/arrow-down.svg';
 
 const props = defineProps<{
 	mode: 'asc' | 'desc' | null

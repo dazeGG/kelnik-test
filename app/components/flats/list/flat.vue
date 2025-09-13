@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { FlatType } from '../../../types';
+import type { FlatType } from '@/types';
 
 const props = defineProps<{
 	flat: FlatType

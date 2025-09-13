@@ -1,8 +1,8 @@
 import { ref } from "vue";
 import { cloneDeep } from 'lodash';
 
-import flatsMock from '../__mock__/flats.json';
-import type { FlatType } from "../types";
+import flatsMock from '@/__mock__/flats.json';
+import type { FlatType } from "@/types";
 
 interface GetFlatsMethodSuccessResponse {
 	success: true

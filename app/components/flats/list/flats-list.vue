@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { watch } from "vue";
-import { useFlatsStore } from "../../../stores";
 
-import UIButton from "../../base/ui-button.vue";
+import { useFlatsStore } from "@/stores";
+import UIButton from "@/components/base/ui-button.vue";
+
 import FlatsTable from './table/flats-table.vue';
 
 const route = useRoute();
