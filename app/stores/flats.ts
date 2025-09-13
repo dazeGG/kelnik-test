@@ -1,4 +1,5 @@
 import { ref } from "vue";
+import { cloneDeep } from 'lodash';
 
 import flatsMock from '../__mock__/flats.json';
 import type { FlatType } from "../types";
@@ -26,7 +27,7 @@ interface Sort {
 
 const getFlats = ({ count, offset }: Pagination, sort?: Sort): GetFlatsMethodSuccessResponse | GetFlatsMethodErrorResponse => {
 	try {
-		const totalFlats = flatsMock as FlatType[];
+		const totalFlats = cloneDeep(flatsMock) as FlatType[];
 		const endIndex = Math.min(offset + count, totalFlats.length);
 
 		const sharedResponse = {
