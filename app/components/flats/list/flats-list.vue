@@ -2,22 +2,70 @@
 import { useFlatsStore } from "../../../stores";
 
 import UIButton from "../../base/ui-button.vue";
-import FlatsTable from './flats-table.vue';
+import FlatsTable from './table/flats-table.vue';
+import {watch} from "vue";
+
+const route = useRoute();
+const router = useRouter();
 
 const flatsStore = useFlatsStore();
+
+const sort = computed<{ type: 'square' | 'floor' | 'price'; mode: 'asc' | 'desc' } | undefined>(() => {
+	const { sort_type, sort_mode } = route.query;
+
+	if (!sort_type || !sort_mode) {
+		return;
+	}
+
+	const validTypes = ['square', 'floor', 'price'];
+	if (!validTypes.includes(sort_type as string)) {
+		return;
+	}
+
+	const validModes = ['asc', 'desc'];
+	if (!validModes.includes(sort_mode as string)) {
+		return;
+	}
+
+	return {
+		type: sort_type as 'square' | 'floor' | 'price',
+		mode: sort_mode as 'asc' | 'desc',
+	};
+});
+
+const loadMore = () => {
+	flatsStore.loadFlats({ offset: flatsStore.flats.length });
+};
+
+const changeSort = (sortKey: string): void => {
+	const { sort_type, sort_mode, ...restQuery } = route.query;
+
+	if (sort.value?.type === sortKey) {
+		if (sort.value.mode === 'asc') {
+			router.push({ query: { ...restQuery, sort_type: sortKey, sort_mode: 'desc' } });
+		} else {
+			router.push({ query: restQuery });
+		}
+	} else {
+		router.push({ query: { ...restQuery, sort_type: sortKey, sort_mode: 'asc' } });
+	}
+};
 
 if (import.meta.client) {
 	flatsStore.loadFlats({});
 }
 
-const loadMore = () => {
-	flatsStore.loadFlats({ offset: flatsStore.flats.length });
-};
+watch(
+	() => sort.value,
+	() => {
+		flatsStore.loadFlats({}, sort.value);
+	},
+);
 </script>
 
 <template>
 	<div class="flats-list">
-		<FlatsTable :flats="flatsStore.flats" :loading="flatsStore.loading" />
+		<FlatsTable :flats="flatsStore.flats" :loading="flatsStore.loading" :sort="sort" @change-sort="changeSort" />
 
 		<UIButton :disabled="!flatsStore.hasMore" @click="loadMore">Загрузить еще</UIButton>
 	</div>
