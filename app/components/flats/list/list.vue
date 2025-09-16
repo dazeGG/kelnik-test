@@ -19,13 +19,10 @@ const sort = computed<{ type: 'square' | 'floor' | 'price'; mode: 'asc' | 'desc'
 	}
 
 	const validTypes = ['square', 'floor', 'price'];
-	if (!validTypes.includes(sort_type as string)) {
-		return;
-	}
-
 	const validModes = ['asc', 'desc'];
-	if (!validModes.includes(sort_mode as string)) {
-		return;
+
+	if (!validTypes.includes(sort_type as string) || !validModes.includes(sort_mode as string)) {
+		return undefined;
 	}
 
 	return {
@@ -52,16 +49,18 @@ const changeSort = (sortKey: string): void => {
 	}
 };
 
-if (import.meta.client) {
-	flatsStore.loadFlats({});
-}
-
 watch(
 	() => sort.value,
 	(newSort) => {
 		flatsStore.loadFlats({ count: flatsStore.flats.length }, newSort);
 	},
 );
+
+const created = () => {
+	flatsStore.loadFlats({});
+};
+
+created();
 </script>
 
 <template>
