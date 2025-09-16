@@ -29,6 +29,9 @@ importers:
       vue-router:
         specifier: ^4.5.1
         version: 4.5.1(vue@3.5.21(typescript@5.9.2))
+      vue-slider-component:
+        specifier: 4.1.0-beta.7
+        version: 4.1.0-beta.7
     devDependencies:
       '@eslint/js':
         specifier: ^9.35.0
@@ -3819,6 +3822,9 @@ packages:
     resolution: {integrity: sha512-ogAF3P97NPm8fJsE4by9dwSYtDwXIY1nFY9T6DyQnGHd1E2Da94w9JIolpe42LJGIl0DwOHBi8TcRPlPGwbTtw==}
     peerDependencies:
       vue: ^3.2.0
+
+  vue-slider-component@4.1.0-beta.7:
+    resolution: {integrity: sha512-Qb7K920ZG7PoQswoF6Ias+i3W2rd3k4fpk04JUl82kEUcN86Yg6et7bVSKWt/7VpQe8a5IT3BqCKSCOZ7AJgCA==}
 
   vue@3.5.21:
     resolution: {integrity: sha512-xxf9rum9KtOdwdRkiApWL+9hZEMWE90FHh8yS1+KJAiWYh+iGWV1FquPjoO9VUHQ+VIhsCXNNyZ5Sf4++RVZBA==}
@@ -8027,6 +8033,8 @@ snapshots:
     dependencies:
       '@vue/devtools-api': 6.6.4
       vue: 3.5.21(typescript@5.9.2)
+
+  vue-slider-component@4.1.0-beta.7: {}
 
   vue@3.5.21(typescript@5.9.2):
     dependencies:
