@@ -1,23 +1,19 @@
 <script setup lang="ts">
-import { debounce } from "lodash";
-
+import { useFiltersStore } from "@/stores";
 import UISlider from '@/components/base/ui-slider.vue';
 
-const priceRange = ref<[number, number]>([5500000, 18900000]);
+const filtersStore = useFiltersStore();
 
-const changePrice = debounce((newValue: [number, number]): void => {
-	console.log(newValue);
-}, 500);
+const priceRange = defineModel<[number, number]>('priceRange', { required: true });
 </script>
 
 <template>
 	<UISlider
 		v-model:value="priceRange"
 		label="Стоимость квартиры, ₽"
-		:min="5500000"
-		:max="18900000"
+		:min="filtersStore.limits.price[0]"
+		:max="filtersStore.limits.price[1]"
 		:interval="100000"
-		@update:value="changePrice"
 	>
 		<template #value-from>{{ priceRange[0].toLocaleString('ru-RU') }}</template>
 		<template #value-to>{{ priceRange[1].toLocaleString('ru-RU') }}</template>

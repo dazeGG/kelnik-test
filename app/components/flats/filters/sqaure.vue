@@ -1,22 +1,18 @@
 <script setup lang="ts">
-import { debounce } from "lodash";
-
+import { useFiltersStore } from "@/stores";
 import UISlider from '@/components/base/ui-slider.vue';
 
-const squareRange = ref<[number, number]>([33, 123]);
+const filtersStore = useFiltersStore();
 
-const changeSquare = debounce((newValue: [number, number]): void => {
-	console.log(newValue);
-}, 500);
+const squareRange = defineModel<[number, number]>('squareRange', { required: true });
 </script>
 
 <template>
 	<UISlider
 		v-model:value="squareRange"
 		label="Площадь, м²"
-		:min="33"
-		:max="123"
+		:min="filtersStore.limits.square[0]"
+		:max="filtersStore.limits.square[1]"
 		:interval="1"
-		@update:value="changeSquare"
 	/>
 </template>
