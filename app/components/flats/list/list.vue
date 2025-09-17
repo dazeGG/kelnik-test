@@ -1,11 +1,15 @@
 <script setup lang="ts">
 import { watch } from "vue";
+import { useWindowSize } from '@vueuse/core';
 
 import { useFlatsStore } from "@/stores";
 import UIButton from "@/components/base/ui-button.vue";
 import type { FlatsFilters, FlatsSort } from "@/types";
 
 import FlatsTable from './table/flats-table.vue';
+import FlatsCards from "./cards/flats-cards.vue";
+
+const { width } = useWindowSize();
 
 const route = useRoute();
 const router = useRouter();
@@ -76,7 +80,13 @@ created();
 
 <template>
 	<div class="flats-list">
-		<FlatsTable :flats="flatsStore.flats" :loading="flatsStore.loading" :sort="sort" @change-sort="changeSort" />
+		<component
+			:is="width >= 1440 ? FlatsTable : FlatsCards"
+			:flats="flatsStore.flats"
+			:loading="flatsStore.loading"
+			:sort="sort"
+			@change-sort="changeSort"
+		/>
 
 		<UIButton :disabled="!flatsStore.hasMore" class="flats-list__load-more" @click="loadMore">Загрузить еще</UIButton>
 	</div>

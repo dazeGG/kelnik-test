@@ -8,7 +8,9 @@ import FlatsFilters from './filters/filters.vue';
 		<div class="flats__content">
 			<h1>Квартиры</h1>
 
-			<FlatsList class="flats__list" />
+			<ClientOnly>
+				<FlatsList class="flats__list" />
+			</ClientOnly>
 		</div>
 
 		<FlatsFilters class="flats__filters" />
