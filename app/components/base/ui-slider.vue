@@ -48,7 +48,13 @@ const props = defineProps<{
 	gap: 6px;
 
 	&__label {
-		font-size: 14px;
+		@include small {
+			font-size: 13px;
+		}
+
+		@include large {
+			font-size: 14px;
+		}
 	}
 
 	&__values {

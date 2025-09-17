@@ -2,16 +2,16 @@
 import UILoader from "@/components/base/ui-loader.vue";
 import type { FlatType } from '@/types';
 
-import TableSortableButton from "./table-sortable-button.vue";
+import SortButton from "../sort-button.vue";
+
+const emit = defineEmits<{
+	(e: 'change-sort', sortKey: string): void
+}>();
 
 const props = defineProps<{
 	flats: FlatType[]
 	loading?: boolean
 	sort?: { type: 'square' | 'floor' | 'price'; mode: 'asc' | 'desc' } | null
-}>();
-
-const emit = defineEmits<{
-	(e: 'change-sort', sortKey: string): void
 }>();
 
 interface Column {
@@ -57,13 +57,13 @@ const changeSort = (sortKey: string): void => {
 			<thead class="flats-table__head">
 				<tr>
 					<th v-for="column in columns" :key="column.key">
-						<TableSortableButton
+						<SortButton
 							v-if="column.sortable"
 							:mode="props.sort?.type === column.key ? props.sort.mode : null"
 							@click="() => changeSort(column.key)"
 						>
 							{{ column.title }}
-						</TableSortableButton>
+						</SortButton>
 						<span v-else>{{ column.title }}</span>
 					</th>
 				</tr>
