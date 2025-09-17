@@ -30,6 +30,14 @@ const props = withDefaults(
 	transition-duration: 100ms;
 	transition-property: outline-color, box-shadow;
 
+	@include small {
+		font-size: 15px;
+	}
+
+	@include large {
+		font-size: 16px;
+	}
+
 	&.ui-button--default {
 		background-color: white;
 		--outline-color: var(--color-button-border);
@@ -53,6 +61,7 @@ const props = withDefaults(
 		width: 44px;
 		height: 44px;
 		border-radius: 50%;
+		font-size: 16px;
 	}
 
 	&:not([data-circle]) {
