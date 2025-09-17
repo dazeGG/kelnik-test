@@ -45,9 +45,9 @@ const initSquareRange = (): void => {
 	}
 };
 
-const changeRooms = (newRooms: number | null): void => {
+const changeRooms = debounce((newRooms: number | null): void => {
 	router.push({ query: { ...route.query, rooms: newRooms ?? undefined } });
-};
+}, 500);
 
 const changePrice = debounce((newPrice: [number, number]): void => {
 	router.push({

@@ -1,8 +1,12 @@
 import { ref } from "vue";
 import { cloneDeep } from 'lodash';
 
+import type { FlatsFilters, FlatsSort, FlatType } from "@/types";
+
 import flatsMock from '@/__mock__/flats.json';
-import type { FlatType } from "@/types";
+
+const TIMEOUT_FROM = 250;
+const TIMEOUT_TO = 1000;
 
 interface GetFlatsMethodSuccessResponse {
 	success: true
@@ -20,39 +24,75 @@ interface Pagination {
 	offset: number
 }
 
-interface Sort {
-	type: 'square' | 'floor' | 'price'
-	mode: 'asc' | 'desc'
-}
+const filterByRooms = (flat: FlatType, rooms: number | null): boolean => rooms === null || flat.rooms === rooms;
 
-const getFlats = ({ count, offset }: Pagination, sort?: Sort): GetFlatsMethodSuccessResponse | GetFlatsMethodErrorResponse => {
+const filterByPrice = (flat: FlatType, [minPrice, maxPrice]: FlatsFilters['price']): boolean => {
+	if (minPrice !== null && flat.price < minPrice) {
+		return false;
+	}
+
+	if (maxPrice !== null && flat.price > maxPrice) {
+		return false;
+	}
+
+	return true;
+};
+
+const filterBySquare = (flat: FlatType, [minSquare, maxSquare]: FlatsFilters['square']): boolean => {
+	if (minSquare !== null && flat.square < minSquare) {
+		return false;
+	}
+
+	if (maxSquare !== null && flat.square > maxSquare) {
+		return false;
+	}
+
+	return true;
+};
+
+const filterFlats = (flats: FlatType[], filters?: FlatsFilters): FlatType[] => {
+	if (!filters) {return flats;}
+
+	return flats.filter(flat => {
+		return (
+			filterByRooms(flat, filters.rooms) &&
+			filterByPrice(flat, filters.price) &&
+			filterBySquare(flat, filters.square)
+		);
+	});
+};
+
+const sortFlats = (flats: FlatType[], sort?: FlatsSort): FlatType[] => {
+	if (!sort) {
+		return flats;
+	}
+
+	const { type, mode } = sort;
+	return [...flats].sort((a, b) => mode === 'asc' ? a[type] - b[type] : b[type] - a[type]);
+};
+
+const getFlats = (
+	{ count, offset }: Pagination,
+	filters?: FlatsFilters,
+	sort?: FlatsSort,
+): GetFlatsMethodSuccessResponse | GetFlatsMethodErrorResponse => {
 	try {
-		const totalFlats = cloneDeep(flatsMock) as FlatType[];
-		const endIndex = Math.min(offset + count, totalFlats.length);
+		const filteredFlats = filterFlats(cloneDeep(flatsMock) as FlatType[], filters);
+		const sortedFlats = sortFlats(filteredFlats, sort);
 
-		const sharedResponse = {
+		const total = sortedFlats.length;
+		const endIndex = Math.min(offset + count, total);
+		const paginatedData = sortedFlats.slice(offset, endIndex);
+
+		return {
 			success: true,
-			more: offset + count < totalFlats.length,
-		} as const;
-
-		if (sort) {
-			const { type, mode } = sort;
-			const sortedData = totalFlats.sort((a, b) => mode === 'asc' ? a[type] - b[type] : b[type] - a[type]);
-
-			return {
-				...sharedResponse,
-				data: sortedData.slice(offset, endIndex),
-			};
-		} else {
-			return {
-				...sharedResponse,
-				data: totalFlats.slice(offset, endIndex),
-			};
-		}
+			data: paginatedData,
+			more: offset + count < total,
+		};
 	} catch (err) {
 		return {
 			success: false,
-			message: 'Error loading flats: ' + err,
+			message: 'Error loading flats: ' + (err instanceof Error ? err.message : String(err)),
 		};
 	}
 };
@@ -63,13 +103,13 @@ export const useFlatsStore = defineStore('flats', () => {
 	const loading = ref(false);
 	const error = ref<string | null>(null);
 
-	const loadFlats = async ({ count = 5, offset = 0 }: Partial<Pagination>, sort?: Sort): Promise<void> => {
+	const loadFlats = async ({ count = 5, offset = 0 }: Partial<Pagination>, filters?: FlatsFilters, sort?: FlatsSort): Promise<void> => {
 		loading.value = true;
 		error.value = null;
 
-		await new Promise(resolve => setTimeout(resolve, Math.floor(Math.random() * (2000 - 500 + 1)) + 500));
+		await new Promise(resolve => setTimeout(resolve, Math.floor(Math.random() * (TIMEOUT_TO - TIMEOUT_FROM + 1)) + TIMEOUT_FROM));
 
-		const response = getFlats({ count, offset }, sort);
+		const response = getFlats({ count, offset }, filters, sort);
 
 		if (response.success) {
 			if (offset === 0) {

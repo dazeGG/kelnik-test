@@ -8,3 +8,14 @@ export interface FlatType {
 	maxFloor: number
 	price: number
 }
+
+export interface FlatsSort {
+	type: 'square' | 'floor' | 'price'
+	mode: 'asc' | 'desc'
+}
+
+export interface FlatsFilters {
+	rooms: number | null
+	price: [number | null, number | null]
+	square: [number | null, number | null]
+}

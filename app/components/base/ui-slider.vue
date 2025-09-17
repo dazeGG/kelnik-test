@@ -35,6 +35,8 @@ const props = defineProps<{
 			:min="props.min"
 			:max="props.max"
 			:interval="props.interval"
+			:duration="0"
+			drag-on-click
 		/>
 	</div>
 </template>
