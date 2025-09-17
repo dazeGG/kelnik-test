@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { watch } from "vue";
-import { useFlatsStore } from "../../../stores";
 
-import UIButton from "../../base/ui-button.vue";
+import { useFlatsStore } from "@/stores";
+import UIButton from "@/components/base/ui-button.vue";
+import type { FlatsFilters, FlatsSort } from "@/types";
+
 import FlatsTable from './table/flats-table.vue';
 
 const route = useRoute();
@@ -10,7 +12,7 @@ const router = useRouter();
 
 const flatsStore = useFlatsStore();
 
-const sort = computed<{ type: 'square' | 'floor' | 'price'; mode: 'asc' | 'desc' } | undefined>(() => {
+const sort = computed<FlatsSort | undefined>(() => {
 	const { sort_type, sort_mode } = route.query;
 
 	if (!sort_type || !sort_mode) {
@@ -18,13 +20,10 @@ const sort = computed<{ type: 'square' | 'floor' | 'price'; mode: 'asc' | 'desc'
 	}
 
 	const validTypes = ['square', 'floor', 'price'];
-	if (!validTypes.includes(sort_type as string)) {
-		return;
-	}
-
 	const validModes = ['asc', 'desc'];
-	if (!validModes.includes(sort_mode as string)) {
-		return;
+
+	if (!validTypes.includes(sort_type as string) || !validModes.includes(sort_mode as string)) {
+		return undefined;
 	}
 
 	return {
@@ -33,8 +32,18 @@ const sort = computed<{ type: 'square' | 'floor' | 'price'; mode: 'asc' | 'desc'
 	};
 });
 
-const loadMore = () => {
-	flatsStore.loadFlats({ offset: flatsStore.flats.length });
+const filters = computed<FlatsFilters>(() => {
+	const { rooms, price_from, price_to, square_from, square_to } = route.query;
+
+	return {
+		rooms: rooms ? +rooms : null,
+		price: [price_from ? +price_from : null, price_to ? +price_to : null],
+		square: [square_from ? +square_from : null, square_to ? +square_to : null],
+	};
+});
+
+const loadMore = (): void => {
+	flatsStore.loadFlats({ offset: flatsStore.flats.length }, filters.value, sort.value);
 };
 
 const changeSort = (sortKey: string): void => {
@@ -51,16 +60,18 @@ const changeSort = (sortKey: string): void => {
 	}
 };
 
-if (import.meta.client) {
-	flatsStore.loadFlats({});
-}
+const reloadFlats = (): void => {
+	flatsStore.loadFlats({}, filters.value, sort.value);
+};
 
-watch(
-	() => sort.value,
-	(newSort) => {
-		flatsStore.loadFlats({ count: flatsStore.flats.length }, newSort);
-	},
-);
+watch(filters, reloadFlats, { deep: true });
+watch(sort, reloadFlats, { deep: true });
+
+const created = () => {
+	reloadFlats();
+};
+
+created();
 </script>
 
 <template>
