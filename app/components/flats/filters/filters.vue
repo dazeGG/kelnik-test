@@ -92,11 +92,18 @@ watch(squareRange, changeSquare, { deep: true });
 .flats-filters {
 	width: fit-content;
 	height: fit-content;
-	padding: 40px;
 	background: var(--color-accent-muted);
 	border-radius: 10px;
 	display: flex;
 	flex-direction: column;
 	gap: 24px;
+
+	@include small {
+		padding: 20px 19px;
+	}
+
+	@include large {
+		padding: 40px;
+	}
 }
 </style>
