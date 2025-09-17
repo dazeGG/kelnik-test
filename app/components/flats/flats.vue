@@ -5,29 +5,42 @@ import FlatsFilters from './filters/filters.vue';
 
 <template>
 	<div class="flats">
-		<h1>Квартиры</h1>
-
 		<div class="flats__content">
+			<h1>Квартиры</h1>
+
 			<FlatsList class="flats__list" />
-			<FlatsFilters class="flats__filters" />
 		</div>
+
+		<FlatsFilters class="flats__filters" />
 	</div>
 </template>
 
 <style scoped lang="scss">
 .flats {
 	display: flex;
-	flex-direction: column;
-	gap: 48px;
+
+	@include small {
+		gap: 28px;
+	}
+
+	@include large {
+		gap: 80px;
+	}
 
 	&__content {
-		width: 100%;
-		display: flex;
-		gap: 80px;
+		flex: 1;
 	}
 
 	&__list {
 		flex: 1;
+
+		@include small {
+			margin-top: 24px;
+		}
+
+		@include large {
+			margin-top: 48px;
+		}
 	}
 }
 </style>

@@ -99,8 +99,8 @@ const changeSort = (sortKey: string): void => {
 			</tbody>
 		</table>
 
-		<div class="flats-table__loader">
-			<UILoader v-if="props.loading" :size="32" />
+		<div v-if="props.loading" class="flats-table__loader">
+			<UILoader :size="32" />
 		</div>
 	</div>
 </template>

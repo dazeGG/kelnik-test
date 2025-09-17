@@ -1,3 +1,5 @@
+@use 'mixins' as *;
+
 @use 'reset';
 @use '../fonts/index.css';
 
@@ -16,15 +18,30 @@
 }
 
 html {
-	font-size: 16px;
 	font-family: 'PT Root UI', 'PT Root UI VF', sans-serif;
 	color: var(--color-text);
+
+	@include small {
+		font-size: 14px;
+	}
+
+	@include large {
+		font-size: 16px;
+	}
 }
 
 body {
-	max-width: 1440px;
-	padding: 96px 80px;
 	margin: 0 auto;
+
+	@include small {
+		max-width: 960px;
+		padding: 48px 54px;
+	}
+
+	@include large {
+		max-width: 1440px;
+		padding: 96px 80px;
+	}
 }
 
 h1 {

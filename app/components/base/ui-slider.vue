@@ -73,8 +73,15 @@ const props = defineProps<{
 <style lang="scss">
 .vue-slider-rail {
 	background: var(--color-text-10);
-	min-width: 320px;
 	height: 3px !important;
+
+	@include small {
+		min-width: 280px;
+	}
+
+	@include large {
+		min-width: 320px;
+	}
 }
 
 .vue-slider-dot-handle {

@@ -78,15 +78,20 @@ created();
 	<div class="flats-list">
 		<FlatsTable :flats="flatsStore.flats" :loading="flatsStore.loading" :sort="sort" @change-sort="changeSort" />
 
-		<UIButton :disabled="!flatsStore.hasMore" @click="loadMore">Загрузить еще</UIButton>
+		<UIButton :disabled="!flatsStore.hasMore" class="flats-list__load-more" @click="loadMore">Загрузить еще</UIButton>
 	</div>
 </template>
 
 <style scoped lang="scss">
 .flats-list {
-	display: flex;
-	flex-direction: column;
-	align-items: flex-start;
-	gap: 48px;
+	&__load-more {
+		@include small {
+			margin-top: 24px;
+		}
+
+		@include large {
+			margin-top: 48px;
+		}
+	}
 }
 </style>
