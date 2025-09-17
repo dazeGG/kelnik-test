@@ -3,13 +3,11 @@ import UIButton from "@/components/base/ui-button.vue";
 
 const rooms = [1, 2, 3, 4];
 
-const props = defineProps<{
-	activeRooms?: number
-}>();
+const roomsValue = defineModel<number | null>('rooms', { required: true });
 
-const emit = defineEmits<{
-	(e: 'change-rooms', newRoom: number): void
-}>();
+const toggleValue = (valueToToggle: number | null): void => {
+	roomsValue.value = roomsValue.value === valueToToggle ? null : valueToToggle;
+};
 </script>
 
 <template>
@@ -18,8 +16,8 @@ const emit = defineEmits<{
 			v-for="room in rooms"
 			:key="room"
 			circle
-			:type="props.activeRooms === room ? 'primary' : 'default'"
-			@click="() => emit('change-rooms', room)"
+			:type="roomsValue === room ? 'primary' : 'default'"
+			@click="() => toggleValue(room)"
 		>
 			{{ room }}к
 		</UIButton>

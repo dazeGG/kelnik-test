@@ -11,18 +11,19 @@ const router = useRouter();
 
 const filtersStore = useFiltersStore();
 
-const filters = computed(() => {
-	const filters: Partial<Record<'rooms', number>> = {};
-
-	if (route.query.rooms) {
-		filters.rooms = +route.query.rooms;
-	}
-
-	return filters;
-});
-
+const rooms = ref<number | null>(null);
 const priceRange = ref<[number, number]>(cloneDeep(filtersStore.limits.price));
 const squareRange = ref<[number, number]>(cloneDeep(filtersStore.limits.square));
+
+const initRooms = (): void => {
+	if (route.query.rooms) {
+		rooms.value = +route.query.rooms;
+	}
+
+	if (route.query.price_to) {
+		priceRange.value[1] = +route.query.price_to;
+	}
+};
 
 const initPriceRange = (): void => {
 	if (route.query.price_from) {
@@ -44,8 +45,8 @@ const initSquareRange = (): void => {
 	}
 };
 
-const changeRooms = (newRooms: number): void => {
-	router.push({ query: { rooms: newRooms } });
+const changeRooms = (newRooms: number | null): void => {
+	router.push({ query: { ...route.query, rooms: newRooms ?? undefined } });
 };
 
 const changePrice = debounce((newPrice: [number, number]): void => {
@@ -67,18 +68,23 @@ const changeSquare = debounce((newSquare: [number, number]): void => {
 }, 500);
 
 const created = () => {
+	initRooms();
 	initPriceRange();
 	initSquareRange();
 };
 
 created();
+
+watch(rooms, changeRooms, { deep: true });
+watch(priceRange, changePrice, { deep: true });
+watch(squareRange, changeSquare, { deep: true });
 </script>
 
 <template>
 	<div class="flats-filters">
-		<Rooms :active-rooms="filters.rooms" @change-rooms="changeRooms" />
-		<Price v-model:price-range="priceRange" @update:price-range="changePrice" />
-		<Square v-model:square-range="squareRange" @update:square-range="changeSquare" />
+		<Rooms v-model:rooms="rooms" />
+		<Price v-model:price-range="priceRange" />
+		<Square v-model:square-range="squareRange" />
 	</div>
 </template>
 
