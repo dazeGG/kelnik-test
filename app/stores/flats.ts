@@ -51,15 +51,12 @@ const filterBySquare = (flat: FlatType, [minSquare, maxSquare]: FlatsFilters['sq
 };
 
 const filterFlats = (flats: FlatType[], filters?: FlatsFilters): FlatType[] => {
-	if (!filters) {return flats;}
+	if (!filters) {
+		return flats;
+	}
 
-	return flats.filter(flat => {
-		return (
-			filterByRooms(flat, filters.rooms) &&
-			filterByPrice(flat, filters.price) &&
-			filterBySquare(flat, filters.square)
-		);
-	});
+	return flats.filter(flat =>
+		filterByRooms(flat, filters.rooms) && filterByPrice(flat, filters.price) && filterBySquare(flat, filters.square));
 };
 
 const sortFlats = (flats: FlatType[], sort?: FlatsSort): FlatType[] => {
