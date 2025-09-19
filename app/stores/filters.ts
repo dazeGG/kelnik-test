@@ -2,8 +2,8 @@ import { ref } from "vue";
 
 export const useFiltersStore = defineStore('filters', () => {
 	const limits = ref<{ price: [number, number], square: [number, number] }>({
-		price: [5500000, 18900000],
-		square: [33, 123],
+		price: [10000000, 50000000],
+		square: [30, 120],
 	});
 
 	return {
