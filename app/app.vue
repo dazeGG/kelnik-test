@@ -7,8 +7,8 @@ import UpButton from "@/components/e2e/up-button.vue";
 
 <template>
 	<div>
-		<Flats />
-
 		<UpButton />
+
+		<Flats />
 	</div>
 </template>
